@@ -1,10 +1,11 @@
-// @import "./variables.module.scss";
+@import "./reset.scss";
 @import "./mixin.scss";
 @import "./transition.scss";
 @import "./element-plus.scss";
 @import "./sidebar.scss";
 @import "./dark.scss";
-
+// 一定要在main.ts中导入tailwind.css，防止vite每次hmr都会请求src/style/index.scss整体css文件导致热更新慢的问题
+@import "./tailwind.css";
 /* 自定义全局 CssVar */
 :root {
   /* 左侧菜单展开、收起动画时长 */

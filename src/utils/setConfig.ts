@@ -1,8 +1,6 @@
 // 响应式storage
 import { App } from "vue";
 import { routerArrays } from "@/layout/types";
-import IStorage from "@/utils/storage";
-const localStorage = new IStorage("localStorage");
 
 export const injectAppConfig = (app: App, config: ServerConfigs) => {
   const configObj = Object.assign(
@@ -31,8 +29,5 @@ export const injectAppConfig = (app: App, config: ServerConfigs) => {
         }
       : {}
   );
-  app.config.globalProperties.$storage = configObj;
-  console.log(configObj, "configObjconfigObj");
-  localStorage.setItem("app-config", configObj);
-  localStorage.setItem("app-config1", 2332);
+  app.config.globalProperties.$appConfig = configObj;
 };

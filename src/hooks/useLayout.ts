@@ -1,21 +1,21 @@
 import { computed } from "vue";
-import { routerArrays } from "../types";
+import { routerArrays } from "../layout/types";
 import { useMultiTagsStore } from "@/store/modules/multiTags";
-import useGetInstance from "@/layout/hooks/useGetInstance";
+import useGetInstance from "@/hooks/useGetInstance";
 
 export function useLayout() {
-  const { $storage, $config } = useGetInstance();
+  const { $appConfig, $config } = useGetInstance();
   const initStorage = () => {
     /** 路由 */
     if (
       useMultiTagsStore().multiTagsCache &&
-      (!$storage.tags || $storage.tags.length === 0)
+      (!$appConfig.tags || $appConfig.tags.length === 0)
     ) {
-      $storage.tags = routerArrays;
+      $appConfig.tags = routerArrays;
     }
     /** 导航 */
-    if (!$storage.layout) {
-      $storage.layout = {
+    if (!$appConfig.layout) {
+      $appConfig.layout = {
         layout: $config?.Layout ?? "vertical",
         theme: $config?.Theme ?? "default",
         darkMode: $config?.DarkMode ?? false,
@@ -24,8 +24,8 @@ export function useLayout() {
       };
     }
     /** 灰色模式、色弱模式、隐藏标签页 */
-    if (!$storage.configure) {
-      $storage.configure = {
+    if (!$appConfig.configure) {
+      $appConfig.configure = {
         grey: $config?.Grey ?? false,
         weak: $config?.Weak ?? false,
         hideTabs: $config?.HideTabs ?? false,
@@ -38,11 +38,11 @@ export function useLayout() {
 
   /** 清空缓存后从serverConfig.json读取默认配置并赋值到storage中 */
   const layout = computed(() => {
-    return $storage?.layout.layout;
+    return $appConfig?.layout.layout;
   });
 
   const layoutTheme = computed(() => {
-    return $storage.layout;
+    return $appConfig.layout;
   });
 
   return {

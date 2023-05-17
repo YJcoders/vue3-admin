@@ -2,16 +2,16 @@ import { store } from "@/store";
 import { defineStore } from "pinia";
 import { getConfig } from "@/config";
 import IStorage from "@/utils/storage";
-const localStorage = new IStorage("localStorage");
+const $localStorage = new IStorage("localStorage");
 
 export const useEpThemeStore = defineStore({
   id: "use-epTheme",
   state: () => ({
     epThemeColor:
-      localStorage.getItem("app-layout")?.layout?.epThemeColor ??
+      $localStorage.getItem("app-config")?.layout?.epThemeColor ??
       getConfig().EpThemeColor,
     epTheme:
-      localStorage.getItem("app-layout")?.layout?.theme ?? getConfig().Theme
+      $localStorage.getItem("app-config")?.layout?.theme ?? getConfig().Theme
   }),
   getters: {
     getEpThemeColor() {
@@ -30,12 +30,12 @@ export const useEpThemeStore = defineStore({
   },
   actions: {
     setEpThemeColor(newColor: string): void {
-      const layout = localStorage.getItem("app-layout");
-      this.epTheme = layout?.theme;
+      const config = $localStorage.getItem("app-config");
+      this.epTheme = config.layout?.theme;
       this.epThemeColor = newColor;
-      if (!layout) return;
-      layout.epThemeColor = newColor;
-      localStorage.setItem("app-layout", layout);
+      if (!config.layout) return;
+      config.layout.epThemeColor = newColor;
+      $localStorage.setItem("app-config", config);
     }
   }
 });

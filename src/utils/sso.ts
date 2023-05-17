@@ -1,6 +1,4 @@
-import { removeToken, setToken, type DataInfo } from "./auth";
-// import { subBefore, getQueryMap } from "@pureadmin/utils";
-// console.log(subBefore, 8881);
+import { removeToken, setToken } from "./auth";
 /**
  * 简版前端单点登录，根据实际业务自行编写
  * 划重点：

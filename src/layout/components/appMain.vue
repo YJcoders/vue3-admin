@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import useGetInstance from "@/layout/hooks/useGetInstance";
+import useGetInstance from "@/hooks/useGetInstance";
 import backTop from "@/assets/svg/back_top.svg?component";
 import { h, computed, Transition, defineComponent } from "vue";
 import { usePermissionStoreHook } from "@/store/modules/permission";
@@ -8,7 +8,7 @@ const props = defineProps({
   fixedHeader: Boolean
 });
 
-const { $storage, $config } = useGetInstance();
+const { $appConfig, $config } = useGetInstance();
 const keepAlive = computed(() => {
   return $config?.KeepAlive;
 });
@@ -20,11 +20,11 @@ const transitions = computed(() => {
 });
 
 const hideTabs = computed(() => {
-  return $storage?.configure.hideTabs;
+  return $appConfig?.configure.hideTabs;
 });
 
 const layout = computed(() => {
-  return $storage?.layout.layout === "vertical";
+  return $appConfig?.layout.layout === "vertical";
 });
 
 const getSectionStyle = computed(() => {

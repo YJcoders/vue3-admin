@@ -3,7 +3,7 @@ import Search from "../search/index.vue";
 import Notice from "../notice/index.vue";
 import { ref, watch, nextTick } from "vue";
 import SidebarItem from "./sidebarItem.vue";
-import { useNav } from "@/layout/hooks/useNav";
+import { useNav } from "@/hooks/useNav";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
 import Setting from "@iconify-icons/ri/settings-3-line";

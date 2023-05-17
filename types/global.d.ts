@@ -8,26 +8,12 @@ import type { ECharts } from "echarts";
 import type { IconifyIcon } from "@iconify/vue";
 import { type RouteComponent, type RouteLocationNormalized } from "vue-router";
 
-/**
- * 全局类型声明，无需引入直接在 `.vue` 、`.ts` 、`.tsx` 文件使用即可获得类型提示
- */
+// 全局类型声明，无需引入直接在 `.vue` 、`.ts` 、`.tsx` 文件使用即可获得类型提示
 declare global {
-  /**
-   * 平台的名称、版本、依赖、最后构建时间的类型提示
-   */
-  const __APP_INFO__: {
-    pkg: {
-      name: string;
-      version: string;
-      dependencies: Recordable<string>;
-      devDependencies: Recordable<string>;
-    };
-    lastBuildTime: string;
-  };
+  // 构建分支时间
+  const __APP_VERSION__: string
 
-  /**
-   * Window 的类型提示
-   */
+  //  Window 的类型提示
   interface Window {
     // Global vue app instance
     __APP__: App<Element>;
@@ -42,9 +28,7 @@ declare global {
     [propsName: string]: any;
   }
 
-  /**
-   * 打包压缩格式的类型声明
-   */
+  // 打包压缩格式的类型声明
   type ViteCompression =
     | "none"
     | "gzip"
@@ -62,9 +46,7 @@ declare global {
     VITE_COMPRESSION: ViteCompression;
   }
 
-  /**
-   *   的 `TableColumns` ，方便全局直接调用
-   */
+  // TableColumns
   interface TableColumnList extends Array<TableColumns> {}
 
   interface ServerConfigs {
@@ -132,9 +114,7 @@ declare global {
     tags?: Array<any>;
   }
 
-  /**
-   * `src/router` 文件夹里的类型声明
-   */
+  // `src/router` 文件夹里的类型声明
   interface toRouteType extends RouteLocationNormalized {
     meta: {
       roles: Array<string>;
@@ -143,9 +123,7 @@ declare global {
     };
   }
 
-  /**
-   * @description 完整子路由配置表
-   */
+  // 完整子路由配置表
   interface RouteChildrenConfigsTable {
     /** 子路由地址 `必填` */
     path: string;
@@ -198,9 +176,7 @@ declare global {
     children?: Array<RouteChildrenConfigsTable>;
   }
 
-  /**
-   * @description 整体路由配置表（包括完整子路由）
-   */
+  // 整体路由配置表（包括完整子路由）
   interface RouteConfigsTable {
     /** 路由地址 `必填` */
     path: string;

@@ -4,16 +4,16 @@ import { routerArrays } from "@/layout/types";
 import { multiType, positionType } from "./types";
 import { isEqual, isBoolean, isUrl } from "@/utils";
 import IStorage from "@/utils/storage";
-const localStorage = new IStorage("localStorage");
+const $localStorage = new IStorage("localStorage");
 
 export const useMultiTagsStore = defineStore({
   id: "use-multiTags",
   state: () => ({
     // 存储标签页信息（路由信息）
-    multiTags: localStorage.getItem("app-config")?.multiTagsCache
-      ? localStorage.getItem("responsive-tags")
+    multiTags: $localStorage.getItem("app-config")?.multiTagsCache
+      ? $localStorage.getItem("responsive-tags")
       : [...routerArrays],
-    multiTagsCache: localStorage.getItem("app-config")?.multiTagsCache
+    multiTagsCache: $localStorage.getItem("app-config")?.multiTagsCache
   }),
   getters: {
     getMultiTagsCache() {

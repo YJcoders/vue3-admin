@@ -1,28 +1,29 @@
 import App from "./App.vue";
 import router from "./router";
-import { setupStore } from "@/store";
+import { setupStore } from "./store";
 import ElementPlus from "element-plus";
-import { getServerConfig } from "./config";
 import { createApp, Directive } from "vue";
 import { MotionPlugin } from "@vueuse/motion";
-// import { useEcharts } from "@/plugins/echarts";
-import { injectAppConfig } from "@/utils/setConfig";
-// 引入重置样式
-import "./style/reset.scss";
-// 导入公共样式
+// import { useEcharts } from "@/plugins/echarts"; // 按需引入echarts
+import { Auth } from "./components/ReAuth";
+import { getServerConfig } from "./config";
+import { injectAppConfig } from "./utils/setConfig";
+import IStorage from "./utils/storage";
+
 import "./style/index.scss";
-// 一定要在main.ts中导入tailwind.css，防止vite每次hmr都会请求src/style/index.scss整体css文件导致热更新慢的问题
-import "./style/tailwind.css";
 import "element-plus/dist/index.css";
-// 导入字体图标
 
 const app = createApp(App);
 
 // 自定义指令
-import * as directives from "@/directives";
+import * as directives from "./directives";
 Object.keys(directives).forEach(key => {
   app.directive(key, (directives as { [key: string]: Directive })[key]);
 });
+
+// 自定义 全局存储方法
+app.config.globalProperties.$localStorage = new IStorage("localStorage");
+app.config.globalProperties.$sessionStorage = new IStorage("sessionStorage");
 
 // 全局注册`@iconify/vue`图标库
 import {
@@ -35,7 +36,6 @@ app.component("IconifyIconOnline", IconifyIconOnline);
 app.component("FontIcon", FontIcon);
 
 // 全局注册按钮级别权限组件
-import { Auth } from "@/components/ReAuth";
 app.component("Auth", Auth);
 
 getServerConfig(app).then(async config => {
@@ -45,6 +45,5 @@ getServerConfig(app).then(async config => {
   setupStore(app);
   app.use(MotionPlugin).use(ElementPlus);
   // .use(useEcharts);
-  // .use(Table);
   app.mount("#app");
 });

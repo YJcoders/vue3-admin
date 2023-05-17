@@ -46,10 +46,10 @@ import "animate.css";
 import "@/components/ReIcon/src/offlineIcon";
 import { setType } from "./types";
 import { emitter } from "@/utils/mitt";
-import { useLayout } from "./hooks/useLayout";
+import { useLayout } from "../hooks/useLayout";
 import { useAppStoreHook } from "@/store/modules/app";
 import { useSettingStoreHook } from "@/store/modules/settings";
-import useGetInstance from "@/layout/hooks/useGetInstance";
+import useGetInstance from "@/hooks/useGetInstance";
 import { getDevice } from "@/utils";
 
 import { h, reactive, computed, onMounted, defineComponent } from "vue";
@@ -65,7 +65,7 @@ import backTop from "@/assets/svg/back_top.svg?component";
 const { layout } = useLayout();
 const isMobile = getDevice().isMobile;
 const useSetting = useSettingStoreHook();
-const { $storage } = useGetInstance();
+const { $appConfig } = useGetInstance();
 
 const set: setType = reactive({
   sidebar: computed(() => {
@@ -90,18 +90,18 @@ const set: setType = reactive({
   }),
 
   hideTabs: computed(() => {
-    return $storage?.configure.hideTabs;
+    return $appConfig?.configure.hideTabs;
   })
 });
 
 function setTheme(layoutModel: string) {
   window.document.body.setAttribute("layout", layoutModel);
-  $storage.layout = {
+  $appConfig.layout = {
     layout: `${layoutModel}`,
-    theme: $storage.layout?.theme,
-    darkMode: $storage.layout?.darkMode,
-    sidebarStatus: $storage.layout?.sidebarStatus,
-    epThemeColor: $storage.layout?.epThemeColor
+    theme: $appConfig.layout?.theme,
+    darkMode: $appConfig.layout?.darkMode,
+    sidebarStatus: $appConfig.layout?.sidebarStatus,
+    epThemeColor: $appConfig.layout?.epThemeColor
   };
 }
 

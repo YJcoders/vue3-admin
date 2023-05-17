@@ -7,7 +7,7 @@ import {
   CSSProperties,
   getCurrentInstance
 } from "vue";
-import { tagsViewsType } from "../types";
+import { tagsViewsType } from "../layout/types";
 import { useEventListener } from "@vueuse/core";
 import { useRoute, useRouter } from "vue-router";
 import { useSettingStoreHook } from "@/store/modules/settings";
@@ -20,10 +20,11 @@ import CloseRightTags from "@iconify-icons/ri/text-direction-l";
 import CloseLeftTags from "@iconify-icons/ri/text-direction-r";
 import RefreshRight from "@iconify-icons/ep/refresh-right";
 import Close from "@iconify-icons/ep/close";
-import IStorage from "@/utils/storage";
+import useGetInstance from "@/hooks/useGetInstance";
 
-const localStorage = new IStorage("localStorage");
 export function useTags() {
+  const { $localStorage } = useGetInstance();
+
   const route = useRoute();
   const router = useRouter();
   const instance = getCurrentInstance();
@@ -39,12 +40,11 @@ export function useTags() {
 
   /** 显示模式，默认灵动模式 */
   const showModel = ref(
-    localStorage.getItem("app-config")?.showModel || "smart"
+    $localStorage.getItem("app-config")?.showModel || "smart"
   );
-  console.log(localStorage.getItem("app-config"), 888);
   /** 是否隐藏标签页，默认显示 */
   const showTags =
-    ref(localStorage.getItem("app-config").hideTabs) ?? ref("false");
+    ref($localStorage.getItem("app-config")?.hideTabs) ?? ref("false");
   const multiTags: any = computed(() => {
     return useMultiTagsStoreHook().multiTags;
   });
@@ -120,6 +120,16 @@ export function useTags() {
     }
   }
 
+  /** 鼠标移入添加激活样式 */
+  function onMouseenter(index) {
+    if (index) activeIndex.value = index;
+  }
+
+  /** 鼠标移出恢复默认样式 */
+  function onMouseleave() {
+    activeIndex.value = -1;
+  }
+
   const iconIsActive = computed(() => {
     return (item, index) => {
       if (index === 0) return;
@@ -160,13 +170,10 @@ export function useTags() {
   }
 
   onMounted(() => {
-    console.log(showModel.value, "showModel.value");
     if (!showModel.value) {
-      const configure = localStorage.getItem("app-config");
+      const configure = $localStorage.getItem("app-config");
       configure.showModel = "card";
-      console.log(configure, "configure");
-      debugger;
-      // localStorage.setItem("app-config", configure);
+      $localStorage.setItem("app-config", configure);
     }
   });
 
@@ -199,6 +206,8 @@ export function useTags() {
     getContextMenuStyle,
     closeMenu,
     onMounted,
+    onMouseenter,
+    onMouseleave,
     onContentFullScreen
   };
 }

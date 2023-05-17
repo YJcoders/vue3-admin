@@ -1,30 +1,14 @@
 import dayjs from "dayjs";
-import { resolve } from "path";
-import pkg from "./package.json";
+import path from "path";
+import version from "./public/version";
 import { warpperEnv } from "./build";
 import { getPluginsList } from "./build/plugins";
-import { include, exclude } from "./build/optimize";
 import { UserConfigExport, ConfigEnv, loadEnv } from "vite";
 
-/** 当前执行node命令时文件夹的地址（工作目录） */
 const root: string = process.cwd();
-
-/** 路径查找 */
-const pathResolve = (dir: string): string => {
-  return resolve(__dirname, ".", dir);
-};
-
-/** 设置别名 */
-const alias: Record<string, string> = {
-  "@": pathResolve("src"),
-  "@build": pathResolve("build")
-};
-
-const { dependencies, devDependencies, name, version } = pkg;
-const __APP_INFO__ = {
-  pkg: { dependencies, devDependencies, name, version },
-  lastBuildTime: dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss")
-};
+const __APP_VERSION__ = `分支：${version}  构建日期： ${dayjs(
+  new Date()
+).format("YYYY-MM-DD HH:mm:ss")}`;
 
 export default ({ command, mode }: ConfigEnv): UserConfigExport => {
   const { VITE_CDN, VITE_PORT, VITE_COMPRESSION, VITE_PUBLIC_PATH } =
@@ -33,7 +17,10 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     base: VITE_PUBLIC_PATH,
     root,
     resolve: {
-      alias
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+        "@build": path.resolve(__dirname, "./build")
+      }
     },
     // 服务端渲染
     server: {
@@ -55,8 +42,20 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     plugins: getPluginsList(command, VITE_CDN, VITE_COMPRESSION),
     // https://cn.vitejs.dev/config/dep-optimization-options.html#dep-optimization-options
     optimizeDeps: {
-      include,
-      exclude
+      // 预构建
+      include: [
+        "qs",
+        "mitt",
+        "dayjs",
+        "axios",
+        "pinia",
+        "echarts",
+        "js-cookie",
+        "@vueuse/core",
+        "element-resize-detector"
+      ],
+      // 本地图标 按需引入
+      exclude: ["@iconify-icons/ep", "@iconify-icons/ri"]
     },
     build: {
       sourcemap: false,
@@ -64,7 +63,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       chunkSizeWarningLimit: 4000,
       rollupOptions: {
         input: {
-          index: pathResolve("index.html")
+          index: path.resolve(__dirname, "./index.html")
         },
         // 静态资源分类打包
         output: {
@@ -76,7 +75,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     },
     define: {
       __INTLIFY_PROD_DEVTOOLS__: false,
-      __APP_INFO__: JSON.stringify(__APP_INFO__)
+      __APP_VERSION__: JSON.stringify(__APP_VERSION__)
     }
   };
 };

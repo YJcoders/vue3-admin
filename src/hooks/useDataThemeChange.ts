@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { useLayout } from "./useLayout";
-import { themeColorsType } from "../types";
-import useGetInstance from "@/layout/hooks/useGetInstance";
+import { themeColorsType } from "../layout/types";
+import useGetInstance from "@/hooks/useGetInstance";
 
 export function useDataThemeChange() {
   const { layoutTheme, layout } = useLayout();
@@ -26,8 +26,8 @@ export function useDataThemeChange() {
     { color: "#722ed1", themeColor: "saucePurple" }
   ]);
 
-  const { $storage } = useGetInstance();
-  const dataTheme = ref<boolean>($storage?.layout?.darkMode);
+  const { $appConfig } = useGetInstance();
+  const dataTheme = ref<boolean>($appConfig?.layout?.darkMode);
   const body = document.documentElement as HTMLElement;
 
   return {

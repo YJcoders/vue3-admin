@@ -9,7 +9,7 @@ import {
   onBeforeMount
 } from "vue";
 import { debounce } from "@/utils";
-import useGetInstance from "@/layout/hooks/useGetInstance";
+import useGetInstance from "@/hooks/useGetInstance";
 import { getConfig } from "@/config";
 import { useRouter } from "vue-router";
 import panel from "../panel/index.vue";
@@ -17,10 +17,10 @@ import { emitter } from "@/utils/mitt";
 import { resetRouter } from "@/router";
 import { removeToken } from "@/utils/auth";
 import { routerArrays } from "@/layout/types";
-import { useNav } from "@/layout/hooks/useNav";
+import { useNav } from "@/hooks/useNav";
 import { useAppStoreHook } from "@/store/modules/app";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
-import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
+import { useDataThemeChange } from "@/hooks/useDataThemeChange";
 
 import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
@@ -29,7 +29,7 @@ import Logout from "@iconify-icons/ri/logout-circle-r-line";
 
 const router = useRouter();
 const { device, tooltipEffect } = useNav();
-const { $storage } = useGetInstance();
+const { $appConfig } = useGetInstance();
 const mixRef = ref();
 const verticalRef = ref();
 const horizontalRef = ref();
@@ -43,17 +43,17 @@ if (unref(layoutTheme)) {
 }
 
 /** 默认灵动模式 */
-const markValue = ref($storage.configure?.showModel ?? "smart");
+const markValue = ref($appConfig.configure?.showModel ?? "smart");
 
-const logoVal = ref($storage.configure?.showLogo ?? true);
+const logoVal = ref($appConfig.configure?.showLogo ?? true);
 
 const settings = reactive({
-  greyVal: $storage.configure.grey,
-  weakVal: $storage.configure.weak,
-  tabsVal: $storage.configure.hideTabs,
-  showLogo: $storage.configure.showLogo,
-  showModel: $storage.configure.showModel,
-  multiTagsCache: $storage.configure.multiTagsCache
+  greyVal: $appConfig.configure.grey,
+  weakVal: $appConfig.configure.weak,
+  tabsVal: $appConfig.configure.hideTabs,
+  showLogo: $appConfig.configure.showLogo,
+  showModel: $appConfig.configure.showModel,
+  multiTagsCache: $appConfig.configure.multiTagsCache
 });
 
 const getThemeColorStyle = computed(() => {
@@ -70,9 +70,9 @@ const showThemeColors = computed(() => {
 });
 
 function storageConfigureChange<T>(key: string, val: T): void {
-  const storageConfigure = $storage.configure;
+  const storageConfigure = $appConfig.configure;
   storageConfigure[key] = val;
-  $storage.configure = storageConfigure;
+  $appConfig.configure = storageConfigure;
 }
 
 function toggleClass(flag: boolean, clsName: string, target?: HTMLElement) {
@@ -167,17 +167,17 @@ const getThemeColor = computed(() => {
 function setLayoutModel(layout: string) {
   layoutTheme.value.layout = layout;
   window.document.body.setAttribute("layout", layout);
-  $storage.layout = {
+  $appConfig.layout = {
     layout,
     theme: layoutTheme.value.theme,
-    darkMode: $storage.layout?.darkMode,
-    sidebarStatus: $storage.layout?.sidebarStatus,
-    epThemeColor: $storage.layout?.epThemeColor
+    darkMode: $appConfig.layout?.darkMode,
+    sidebarStatus: $appConfig.layout?.sidebarStatus,
+    epThemeColor: $appConfig.layout?.epThemeColor
   };
   useAppStoreHook().setLayout(layout);
 }
 
-watch($storage, ({ layout }) => {
+watch($appConfig, ({ layout }) => {
   switch (layout["layout"]) {
     case "vertical":
       toggleClass(true, "is-select", unref(verticalRef));

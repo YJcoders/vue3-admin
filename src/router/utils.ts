@@ -20,7 +20,6 @@ const modulesRoutes = import.meta.glob("/src/views/**/*.{vue,tsx}");
 
 // 动态路由
 import { getAsyncRoutes } from "@/api/routes";
-console.log(isIncludeAllChildren, "intersection");
 function handRank(routeInfo: any) {
   const { name, path, parentId, meta } = routeInfo;
   return isEmpty(parentId)
@@ -348,7 +347,7 @@ function isIncludeAllChildren(arr1: any[], arr2: any[]) {
 }
 
 /** 是否有按钮级别的权限 */
-console.log(isIncludeAllChildren([1, 2], [1, 2, 3]));
+console.log;
 function hasAuth(value: string | Array<string>): boolean {
   if (!value) return false;
   /** 从当前路由的`meta`字段里获取按钮级别的所有自定义`code`值 */

@@ -2,7 +2,7 @@
 import extraIcon from "./extraIcon.vue";
 import Search from "../search/index.vue";
 import Notice from "../notice/index.vue";
-import { useNav } from "@/layout/hooks/useNav";
+import { useNav } from "@/hooks/useNav";
 import { ref, toRaw, watch, onMounted, nextTick } from "vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { getParentPaths, findRouteByPath } from "@/router/utils";

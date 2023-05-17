@@ -4,14 +4,15 @@ import { useRoute } from "vue-router";
 import { emitter } from "@/utils/mitt";
 import SidebarItem from "./sidebarItem.vue";
 import leftCollapse from "./leftCollapse.vue";
-import { useNav } from "@/layout/hooks/useNav";
+import { useNav } from "@/hooks/useNav";
 import { ref, computed, watch, onBeforeMount } from "vue";
 import { findRouteByPath, getParentPaths } from "@/router/utils";
 import { usePermissionStoreHook } from "@/store/modules/permission";
-import IStorage from "@/utils/storage";
-const localStorage = new IStorage("localStorage");
+import useGetInstance from "@/hooks/useGetInstance";
+
+const { $localStorage } = useGetInstance();
 const route = useRoute();
-const showLogo = ref(localStorage.getItem("app-config")?.showLogo ?? true);
+const showLogo = ref($localStorage.getItem("app-config")?.showLogo ?? true);
 
 const { routers, device, useApp, isCollapse, menuSelect, toggleSideBar } =
   useNav();

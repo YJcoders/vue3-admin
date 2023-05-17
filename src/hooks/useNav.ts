@@ -1,8 +1,8 @@
 import { storeToRefs } from "pinia";
 import { getConfig } from "@/config";
 import { emitter } from "@/utils/mitt";
-import { routeMetaType } from "../types";
-import useGetInstance from "@/layout/hooks/useGetInstance";
+import { routeMetaType } from "../layout/types";
+import useGetInstance from "@/hooks/useGetInstance";
 import { computed, CSSProperties } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { router, remainingPaths } from "@/router";
@@ -47,9 +47,9 @@ export function useNav() {
     return useApp.getDevice;
   });
 
-  const { $storage, $config } = useGetInstance();
+  const { $appConfig, $config } = useGetInstance();
   const layout = computed(() => {
-    return $storage?.layout?.layout;
+    return $appConfig?.layout?.layout;
   });
 
   const title = computed(() => {
@@ -137,7 +137,7 @@ export function useNav() {
     layout,
     logout,
     routers,
-    $storage,
+    $appConfig,
     backHome,
     onPanel,
     getDivStyle,

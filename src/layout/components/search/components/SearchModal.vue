@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 import { deepClone } from "@/utils";
 import SearchResult from "./SearchResult.vue";
 import SearchFooter from "./SearchFooter.vue";
-import { useNav } from "@/layout/hooks/useNav";
+import { useNav } from "@/hooks/useNav";
 import { ref, computed, shallowRef } from "vue";
 import { useDebounceFn, onKeyStroke } from "@vueuse/core";
 import { usePermissionStoreHook } from "@/store/modules/permission";
