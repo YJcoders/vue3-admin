@@ -1,6 +1,6 @@
 import type { IconifyIcon } from "@iconify/vue";
 
-export const routerArrays: Array<RouteConfigs> = [
+export const routerArrays: Array<RouteConfig> = [
   {
     path: "/welcome",
     parentPath: "/",
@@ -19,18 +19,18 @@ export type routeMetaType = {
   auths?: Array<string>;
 };
 
-export type RouteConfigs = {
+export type RouteConfig = {
   path?: string;
   parentPath?: string;
   query?: object;
   params?: object;
   meta?: routeMetaType;
-  children?: RouteConfigs[];
+  children?: RouteConfig[];
   name?: string;
 };
 
 export type multiTagsType = {
-  tags: Array<RouteConfigs>;
+  tags: Array<RouteConfig>;
 };
 
 export type tagsViewsType = {

@@ -1,5 +1,5 @@
 import { store } from "@/store";
-import { appType } from "./types";
+import { appType, scrollType } from "./types";
 import { defineStore } from "pinia";
 import { getConfig } from "@/config";
 import { getDevice } from "@/utils";
@@ -18,7 +18,12 @@ export const useAppStore = defineStore({
     },
     // 这里的layout用于监听容器拖拉后恢复对应的导航模式
     layout: $localStorage.getItem("app-config")?.layout ?? getConfig().Layout,
-    device: getDevice().isMobile ? "mobile" : "desktop"
+    device: getDevice().isMobile ? "mobile" : "desktop",
+    //  主体页面 el-scrollbar 滚动数据
+    scrollInfo: {
+      scrollLeft: 0,
+      scrollTop: 0
+    }
   }),
   getters: {
     getSidebarStatus() {
@@ -26,6 +31,9 @@ export const useAppStore = defineStore({
     },
     getDevice() {
       return this.device;
+    },
+    getScrollInfo() {
+      return this.scrollInfo;
     }
   },
   actions: {
@@ -55,6 +63,9 @@ export const useAppStore = defineStore({
     },
     setLayout(layout) {
       this.layout = layout;
+    },
+    setScrollInfo(data) {
+      this.scrollInfo = data;
     }
   }
 });

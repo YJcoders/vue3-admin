@@ -27,4 +27,4 @@ export default {
       }
     }
   ]
-} as RouteConfigsTable;
+} as RouteConfig;

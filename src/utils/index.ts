@@ -61,6 +61,39 @@ export const debounce = function (
   return debounced;
 };
 
+// 节流
+export const throttle = function (func: Function, wait: number, options?: any) {
+  // 并且不能不能同时设置 leading 和 trailing 都为false
+  let timer: any;
+  let previous = 0;
+  if (!options) options = {};
+  return function (this: unknown, ...args: any) {
+    const now = new Date().getTime();
+
+    //
+    // 控制是否，一进入就执行
+    if (!previous && options.leading === false) {
+      previous = now;
+    }
+    if (now - previous > wait) {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+      func.apply(this, args);
+
+      previous = now;
+    } else if (!timer && options.trailing !== false) {
+      // 控制离开后是否还执行最后一次
+      timer = setTimeout(() => {
+        func.apply(this, args);
+        timer = null;
+        previous = new Date().getTime();
+      }, wait);
+    }
+  };
+};
+
 export const isString = str => {
   return str instanceof String || typeof str == "string";
 };

@@ -97,7 +97,7 @@
 
 <script setup lang="ts">
 import { emitter } from "@/utils/mitt";
-import { RouteConfigs } from "../../types";
+import { RouteConfig } from "../../types";
 import { useTags } from "../../../hooks/useTag";
 import { routerArrays } from "@/layout/types";
 import { isEqual, isEmpty } from "@/utils";
@@ -341,7 +341,7 @@ function deleteMenu(item, tag?: string) {
   deleteDynamicTag(item, item.path, tag);
 }
 
-function onClickDrop(key, item, selectRoute?: RouteConfigs) {
+function onClickDrop(key, item, selectRoute?: RouteConfig) {
   if (item && item.disabled) return;
 
   let selectTagRoute;

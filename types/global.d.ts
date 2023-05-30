@@ -124,7 +124,7 @@ declare global {
   }
 
   // 完整子路由配置表
-  interface RouteChildrenConfigsTable {
+  interface RouteChildrenConfig {
     /** 子路由地址 `必填` */
     path: string;
     /** 路由名字（对应不要重复，和当前组件的`name`保持一致）`必填` */
@@ -173,11 +173,11 @@ declare global {
       dynamicLevel?: number;
     };
     /** 子路由配置项 */
-    children?: Array<RouteChildrenConfigsTable>;
+    children?: Array<RouteChildrenConfig>;
   }
 
   // 整体路由配置表（包括完整子路由）
-  interface RouteConfigsTable {
+  interface RouteConfig {
     /** 路由地址 `必填` */
     path: string;
     /** 路由名字（保持唯一）`可选` */
@@ -197,6 +197,6 @@ declare global {
       rank?: number;
     };
     /** 子路由配置项 */
-    children?: Array<RouteChildrenConfigsTable>;
+    children?: Array<RouteChildrenConfig>;
   }
 }

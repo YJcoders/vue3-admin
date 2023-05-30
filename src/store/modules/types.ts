@@ -19,6 +19,10 @@ export type appType = {
   };
   layout: string;
   device: string;
+  scrollInfo: {
+    scrollLeft: number;
+    scrollTop: number;
+  };
 };
 
 export type multiType = {

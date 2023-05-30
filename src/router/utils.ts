@@ -9,7 +9,7 @@ import {
 import { router } from "./index";
 import { isProxy, toRaw } from "vue";
 import { useTimeoutFn } from "@vueuse/core";
-import { RouteConfigs } from "@/layout/types";
+import { RouteConfig } from "@/layout/types";
 import { deepClone, isString, isEmpty } from "@/utils";
 import { getConfig } from "@/config";
 import { buildHierarchyTree } from "@/utils/tree";
@@ -89,7 +89,7 @@ function filterNoPermissionTree(data: RouteComponent[]) {
 }
 
 /** 批量删除缓存路由(keepalive) */
-function delAliveRoutes(delAliveRouteList: Array<RouteConfigs>) {
+function delAliveRoutes(delAliveRouteList: Array<RouteConfig>) {
   delAliveRouteList.forEach(route => {
     usePermissionStoreHook().cacheOperate({
       mode: "delete",
