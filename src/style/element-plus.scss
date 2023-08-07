@@ -41,17 +41,6 @@
   margin-left: 2px !important;
 }
 
-/* 自定义 popover 的类名 */
-.pure-popper {
-  padding: 0 !important;
-}
-
-/* 自定义 tooltip 的类名 */
-.pure-tooltip {
-  // 右侧操作面板right-panel类名的z-index为40000，tooltip需要大于它才能显示
-  z-index: 41000 !important;
-}
-
 /* nprogress 适配 element-plus 的主题色 */
 #nprogress {
   & .bar {
@@ -97,7 +86,7 @@
 }
 
 /* 克隆并自定义 ElMessage 样式，不会影响 ElMessage 原本样式，在 src/utils/message.ts 中调用自定义样式 ElMessage 方法即可，暗黑模式在 src/style/dark.scss 文件进行了适配 */
-.pure-message {
+.fe-message {
   border-width: 0 !important;
   background: #fff !important;
   padding: 10px 13px !important;

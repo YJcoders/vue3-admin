@@ -222,3 +222,26 @@ export const getDevice = () => {
     language: navigator.language.toLowerCase()
   };
 };
+
+// 将rgb和hex互转
+function hexToRgb(hex) {
+  return [
+    parseInt("0x" + hex.slice(1, 3)),
+    parseInt("0x" + hex.slice(3, 5)),
+    parseInt("0x" + hex.slice(5, 7))
+  ];
+}
+function rgbToHex(r, g, b) {
+  return "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
+}
+export const darken = (color, level) => {
+  const rgba = hexToRgb(color);
+  for (let i = 0; i < 3; i++) rgba[i] = Math.floor(rgba[i] * (1 - level));
+  return rgbToHex(rgba[0], rgba[1], rgba[2]);
+};
+export const lighten = (color, level) => {
+  const rgba = hexToRgb(color);
+  for (let i = 0; i < 3; i++)
+    rgba[i] = Math.floor((255 - rgba[i]) * level + rgba[i]);
+  return rgbToHex(rgba[0], rgba[1], rgba[2]);
+};

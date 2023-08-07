@@ -42,7 +42,7 @@ const message = (
   if (!params) {
     return ElMessage({
       message,
-      customClass: "pure-message"
+      customClass: "fe-message"
     });
   } else {
     const {
@@ -70,8 +70,7 @@ const message = (
       offset,
       appendTo,
       grouping,
-      // 全局搜 pure-message 即可知道该类的样式位置
-      customClass: customClass === "antd" ? "pure-message" : "",
+      customClass: customClass === "antd" ? "fe-message" : "",
       onClose: () => (isFunction(onClose) ? onClose() : null)
     });
   }

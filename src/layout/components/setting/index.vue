@@ -34,7 +34,14 @@ const mixRef = ref();
 const verticalRef = ref();
 const horizontalRef = ref();
 
-const { dataTheme, layoutTheme, themeColors } = useDataThemeChange();
+const {
+  dataTheme,
+  layoutTheme,
+  themeColors,
+  dataThemeChange,
+  setEpThemeColor,
+  setLayoutThemeColor
+} = useDataThemeChange();
 
 /* body添加layout属性，作用于src/style/sidebar.scss */
 if (unref(layoutTheme)) {
@@ -115,8 +122,9 @@ function onReset() {
   removeToken();
   window.localStorage.clear();
   window.sessionStorage.clear();
-  const { Grey, Weak, MultiTagsCache, Layout } = getConfig();
+  const { Grey, Weak, MultiTagsCache, Layout, EpThemeColor } = getConfig();
   useAppStoreHook().setLayout(Layout);
+  setEpThemeColor(EpThemeColor);
   useMultiTagsStoreHook().multiTagsCacheChange(MultiTagsCache);
   toggleClass(Grey, "html-grey", document.querySelector("html"));
   toggleClass(Weak, "html-weakness", document.querySelector("html"));
@@ -198,6 +206,7 @@ watch($appConfig, ({ layout }) => {
 });
 
 onBeforeMount(() => {
+  dataThemeChange();
   /* 初始化项目配置 */
   nextTick(() => {
     settings.greyVal &&

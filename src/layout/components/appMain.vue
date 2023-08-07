@@ -106,7 +106,7 @@ const transitionMain = defineComponent({
         name:
           transitions.value(this.route) &&
           this.route.meta.transition.enterTransition
-            ? "pure-classes-transition"
+            ? "fe-classes-transition"
             : (transitions.value(this.route) &&
                 this.route.meta.transition.name) ||
               "fade-transform",
