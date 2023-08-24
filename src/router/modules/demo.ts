@@ -18,6 +18,14 @@ export default {
       }
     },
     {
+      path: "/demo/vue3",
+      name: "Vue3",
+      component: () => import("@/views/pages/demo/vue3/index.vue"),
+      meta: {
+        title: "vue3语法"
+      }
+    },
+    {
       path: "/demo/lazy-load",
       redirect: "/demo/lazy-load/1",
       name: "LazyLoad",
